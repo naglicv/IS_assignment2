@@ -49,9 +49,9 @@ df = pd.read_json("./datasets/News_Category_Dataset_IS_course.json", lines=True)
 new_data = df[['headline', 'short_description', 'category']].copy()
 
 # Replace None with a default string and apply function
-new_data['headline'] = new_data['headline'].fillna('').apply(preprocess_text)
-new_data['short_description'] = new_data['short_description'].fillna('').apply(preprocess_text)
+new_data['clean_headline'] = new_data['headline'].fillna('').apply(preprocess_text)
+new_data['clean_short_description'] = new_data['short_description'].fillna('').apply(preprocess_text)
 
 #new_data['clean_desc'] = new_data['short_description'].apply(preprocess_text)
  
-print(new_data[['headline', 'short_description']][:10])
+print(new_data[['clean_headline','headline', 'clean_short_description','short_description']][:10])
