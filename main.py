@@ -60,8 +60,12 @@ print(new_data[['clean_head','headline', 'clean_desc','short_description']][:10]
 X_train, X_test, y_train, y_test = train_test_split(new_data[['clean_head', 'clean_desc', 'headline', 'short_description']], new_data['category'], test_size=0.2, random_state=42)
 
 vectorizer = TfidfVectorizer()
-X_train_vec = vectorizer.fit_transform(X_train['clean_desc'])
-X_test_vec = vectorizer.transform(X_test['clean_desc'])
+# Repeat the headline 3 times
+X_train['clean_text'] = X_train['clean_head'] + ' ' + X_train['clean_head'] + ' ' + X_train['clean_desc']
+X_test['clean_text'] = X_test['clean_head'] + ' ' + X_test['clean_head'] + ' ' + X_test['clean_desc']
+
+X_train_vec = vectorizer.fit_transform(X_train['clean_text'])
+X_test_vec = vectorizer.transform(X_test['clean_text'])
 
 # Random Forest Classifier
 rf_model = RandomForestClassifier()
