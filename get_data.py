@@ -47,6 +47,8 @@ def get_data():
     new_data['clean_head'] = new_data['headline'].fillna('').apply(preprocess_text)
     new_data['clean_desc'] = new_data['short_description'].fillna('').apply(preprocess_text)
 
+    new_data['clean_text'] = new_data['clean_head'] + ' ' + new_data['clean_head'] + ' ' + new_data['clean_desc']
+    #print(new_data[['clean_head','headline', 'clean_desc','short_description']][:10])
     return new_data
 
 
@@ -80,4 +82,5 @@ def get_data_w2v():
         print(f"Similar word: {word}, Similarity: {similarity}")'''
 
 if __name__ == "__main__":
-    get_data_w2v()
+    #get_data_w2v()
+    get_data().to_csv('cleaned.csv', index=False)
