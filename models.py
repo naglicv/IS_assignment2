@@ -54,27 +54,57 @@ result_ca_KNN = accuracy_score(y_test, pred_KNN)
 print("K-Nearest Neighbors Accuracy:", result_ca_KNN)
 
 # Hard Voting
-model_voting = VotingClassifier(estimators=[('dt', model_DT), ('nb', model_NB), ('knn', model_KNN)], voting='hard')
-model_voting.fit(X_train_vec, y_train)
-pred_voting = model_voting.predict(X_test_vec)
-result_voting = accuracy_score(y_test, pred_voting)
-print("Hard Voting Accuracy:", result_voting)
+model_voting_hard = VotingClassifier(estimators=[('dt', model_DT), ('nb', model_NB), ('knn', model_KNN)], voting='hard')
+model_voting_hard.fit(X_train_vec, y_train)
+pred_voting_hard = model_voting_hard.predict(X_test_vec)
+result_voting_hard = accuracy_score(y_test, pred_voting_hard)
+print("Hard Voting Accuracy:", result_voting_hard)
 
 # Soft Voting
-model_voting = VotingClassifier(estimators=[('dt', model_DT), ('nb', model_NB), ('knn', model_KNN)], voting='soft')
-model_voting.fit(X_train_vec, y_train)
-pred_voting = model_voting.predict(X_test_vec)
-result_voting = accuracy_score(y_test, pred_voting)
-print("Soft Voting Accuracy:", result_voting)
+model_voting_soft = VotingClassifier(estimators=[('dt', model_DT), ('nb', model_NB), ('knn', model_KNN)], voting='soft')
+model_voting_soft.fit(X_train_vec, y_train)
+pred_voting_soft = model_voting_soft.predict(X_test_vec)
+result_voting_soft = accuracy_score(y_test, pred_voting_soft)
+print("Soft Voting Accuracy:", result_voting_soft)
 
 # Weighted Voting 
-pred_DT_prob = model_DT.predict_proba(X_test_vec)
+"""pred_DT_prob = model_DT.predict_proba(X_test_vec)
 pred_NB_prob = model_NB.predict_proba(X_test_vec)
 pred_KNN_prob = model_KNN.predict_proba(X_test_vec)
 
 weighted_DT_prob = result_ca_DT * pred_DT_prob
 weighted_NB_prob = result_ca_NB * pred_NB_prob
 weighted_KNN_prob = result_ca_KNN * pred_KNN_prob
+
+pred_prob = weighted_DT_prob + weighted_NB_prob + weighted_KNN_prob
+predicted_labels = np.argmax(pred_prob, axis=1)"""
+
+"""# Equal Weights
+equal_weight = 1/3
+
+weighted_DT_prob = equal_weight * pred_DT_prob
+weighted_NB_prob = equal_weight * pred_NB_prob
+weighted_KNN_prob = equal_weight * pred_KNN_prob
+
+pred_prob = weighted_DT_prob + weighted_NB_prob + weighted_KNN_prob
+predicted_labels = np.argmax(pred_prob, axis=1)"""
+
+# Calculate total accuracy
+total_accuracy = result_ca_DT + result_ca_NB + result_ca_KNN
+
+# Calculate weights
+weight_DT = result_ca_DT / total_accuracy
+weight_NB = result_ca_NB / total_accuracy
+weight_KNN = result_ca_KNN / total_accuracy
+
+# Weighted Voting
+pred_DT_prob = model_DT.predict_proba(X_test_vec)
+pred_NB_prob = model_NB.predict_proba(X_test_vec)
+pred_KNN_prob = model_KNN.predict_proba(X_test_vec)
+
+weighted_DT_prob = weight_DT * pred_DT_prob
+weighted_NB_prob = weight_NB * pred_NB_prob
+weighted_KNN_prob = weight_KNN * pred_KNN_prob
 
 pred_prob = weighted_DT_prob + weighted_NB_prob + weighted_KNN_prob
 predicted_labels = np.argmax(pred_prob, axis=1)
@@ -147,12 +177,50 @@ pred_xgb = model_xgb.predict(X_test_vec)
 result_xgb = accuracy_score(y_test, pred_xgb)
 print("XGBoost Accuracy:", result_xgb)
 
-# Visualization
-algo_names = ["Decision Tree", "Naive Bayes", "K-Nearest Neighbors", "Voting", "Weighted Voting", "Bagging", "Random Forest", "Logistic Regression", "Boosting", "XGBoost"]
-performances = [result_ca_DT, result_ca_NB, result_ca_KNN, result_voting, result_wvoting, result_bagging, result_rf, result_lr, result_boosting, result_xgb]
-ensemble_model = [0, 0, 0, 1, 1, 1, 1, 1, 1, 1]
 
-result_df = pd.DataFrame({'Algorithm': algo_names, 'Performance': performances, 'Ensemble Model': ensemble_model})
+# Store models, their predictions, and their performances in a dictionary
+models = {
+    "Decision Tree": {"model": model_DT, "prediction": pred_DT, "performance": result_ca_DT, "is_ensemble": False},
+    "Naive Bayes": {"model": model_NB, "prediction": pred_NB, "performance": result_ca_NB, "is_ensemble": False},
+    "K-Nearest Neighbors": {"model": model_KNN, "prediction": pred_KNN, "performance": result_ca_KNN, "is_ensemble": False},
+    "Logistic Regression": {"model": model_lr, "prediction": pred_lr, "performance": result_lr, "is_ensemble": False},
+    "Hard Voting": {"model": model_voting_hard, "prediction": pred_voting_hard, "performance": result_voting_hard, "is_ensemble": True},
+    "Soft Voting": {"model": model_voting_soft, "prediction": pred_voting_soft, "performance": result_voting_soft, "is_ensemble": True},
+    "Weighted Voting": {"model": None, "prediction": predicted_labels, "performance": result_wvoting, "is_ensemble": True},
+    "Bagging": {"model": model_bagging, "prediction": pred_bagging, "performance": result_bagging, "is_ensemble": True},
+    "Random Forest": {"model": model_rf, "prediction": pred_rf, "performance": result_rf, "is_ensemble": True},
+    "Boosting": {"model": model_boosting, "prediction": pred_boosting, "performance": result_boosting, "is_ensemble": True},
+    "XGBoost": {"model": model_xgb, "prediction": pred_xgb, "performance": result_xgb, "is_ensemble": False}
+}
+
+# Find the index of the maximum performance
+max_performance_index = max(models, key=lambda x: models[x]['performance'])
+
+# Get the best model's name, model, and predictions
+best_model_name = max_performance_index
+best_model = models[best_model_name]['model']
+best_predictions = models[best_model_name]['prediction']
+
+# Reverse the class_conv dictionary
+rev_class_conv = {v: k for k, v in class_conv.items()}
+
+# Convert best_predictions to integers using the reversed class_conv dictionary
+best_predictions = [rev_class_conv[prediction] for prediction in best_predictions]
+
+# Print the model with the highest accuracy
+print(f"\nThe model with the highest accuracy is: {best_model_name}\n")
+
+# Print the classification report for the best model
+print(classification_report(y_test, best_predictions, zero_division=1))
+
+# Calculate cross-validation scores for the best model
+# Note: For weighted voting, cross-validation is not directly applicable as it involves combining predictions
+if best_model is not None:
+    scores = cross_val_score(best_model, X_train_vec, y_train, cv=5)
+    print(" -> Cross-Validation Scores:", scores)
+
+# Visualization
+result_df = pd.DataFrame([(name, model['performance'], model['is_ensemble']) for name, model in models.items()], columns=['Algorithm', 'Performance', 'Ensemble Model'])
 result_df = result_df.sort_values(by='Performance', ascending=False)
 
 sns.set(style="whitegrid")
