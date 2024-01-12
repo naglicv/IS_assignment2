@@ -7,7 +7,6 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 from sklearn.model_selection import train_test_split
 from gensim.models import Word2Vec
-import models
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
@@ -18,25 +17,17 @@ nltk.download('wordnet')
 lemmatizer = WordNetLemmatizer()
 stemmer = PorterStemmer()
 def preprocess_text(text):
-    # Tokenize the text into words
-    #print(text)
-    words = word_tokenize(text.lower())  # Convert text to lowercase
+    words = word_tokenize(text.lower())
 
-    # Remove punctuation
     table = str.maketrans('', '', string.punctuation)
     words = [word.translate(table) for word in words if word.isalpha()]
 
-    # Remove stopwords
     stop_words = set(stopwords.words('english'))
     words = [word for word in words if word not in stop_words]
 
-    # Lemmatization
     lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
+    #stemmed_words = [stemmer.stem(word) for word in words]
 
-    # Stemming (uncomment if you want to use stemming)
-    stemmed_words = [stemmer.stem(word) for word in words]
-
-    # Join the words back into a string
     preprocessed_text = ' '.join(lemmatized_words)
     return preprocessed_text
 
@@ -92,5 +83,5 @@ def get_data_w2v():
     print("Logistic Regression Accuracy:", logistic_accuracy)
 
 if __name__ == "__main__":
-    #get_data_w2v()
-    get_data().to_csv('cleaned.csv', index=False)
+    get_data_w2v()
+    #get_data().to_csv('cleaned.csv', index=False)
