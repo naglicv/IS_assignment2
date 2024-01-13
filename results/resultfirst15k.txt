@@ -1,0 +1,496 @@
+Decision Tree Accuracy: 0.709
+        Time taken: 14.278037309646606 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.39      0.36      0.38       116
+      BUSINESS       0.26      0.16      0.20        44
+        COMEDY       0.58      0.52      0.55       144
+ ENTERTAINMENT       0.64      0.69      0.66       743
+  FOOD & DRINK       0.46      0.23      0.31        26
+HEALTHY LIVING       0.05      0.03      0.04        31
+ HOME & LIVING       0.37      0.43      0.40        30
+     PARENTING       0.79      0.42      0.55        26
+       PARENTS       0.15      0.18      0.16        22
+      POLITICS       0.85      0.87      0.86      1499
+  QUEER VOICES       0.58      0.50      0.54       125
+        SPORTS       0.58      0.55      0.57       119
+STYLE & BEAUTY       0.46      0.36      0.41        33
+        TRAVEL       0.19      0.33      0.24        15
+      WELLNESS       0.43      0.37      0.40        27
+
+      accuracy                           0.71      3000
+     macro avg       0.45      0.40      0.42      3000
+  weighted avg       0.70      0.71      0.70      3000
+
+Naive Bayes Accuracy: 0.686
+        Time taken: 0.039998769760131836 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       1.00      0.00      0.00       116
+      BUSINESS       1.00      0.00      0.00        44
+        COMEDY       1.00      0.01      0.03       144
+ ENTERTAINMENT       0.74      0.75      0.75       743
+  FOOD & DRINK       1.00      0.00      0.00        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       1.00      0.00      0.00        30
+     PARENTING       1.00      0.00      0.00        26
+       PARENTS       1.00      0.00      0.00        22
+      POLITICS       0.67      1.00      0.80      1499
+  QUEER VOICES       1.00      0.00      0.00       125
+        SPORTS       1.00      0.06      0.11       119
+STYLE & BEAUTY       1.00      0.00      0.00        33
+        TRAVEL       1.00      0.00      0.00        15
+      WELLNESS       1.00      0.00      0.00        27
+
+      accuracy                           0.69      3000
+     macro avg       0.96      0.12      0.11      3000
+  weighted avg       0.77      0.69      0.59      3000
+
+K-Nearest Neighbors Accuracy: 0.7593333333333333
+        Time taken: 2.384753704071045 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.64      0.18      0.28       116
+      BUSINESS       0.00      0.00      1.00        44
+        COMEDY       0.64      0.57      0.60       144
+ ENTERTAINMENT       0.77      0.74      0.76       743
+  FOOD & DRINK       0.76      0.50      0.60        26
+HEALTHY LIVING       0.50      0.03      0.06        31
+ HOME & LIVING       0.80      0.40      0.53        30
+     PARENTING       0.78      0.54      0.64        26
+       PARENTS       0.20      0.05      0.07        22
+      POLITICS       0.77      0.97      0.86      1499
+  QUEER VOICES       0.74      0.39      0.51       125
+        SPORTS       0.74      0.50      0.59       119
+STYLE & BEAUTY       0.70      0.42      0.53        33
+        TRAVEL       0.43      0.20      0.27        15
+      WELLNESS       1.00      0.15      0.26        27
+
+      accuracy                           0.76      3000
+     macro avg       0.63      0.38      0.50      3000
+  weighted avg       0.74      0.76      0.74      3000
+
+Bagging Accuracy: 0.756
+        Time taken: 134.30356645584106 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.55      0.41      0.47       116
+      BUSINESS       0.38      0.14      0.20        44
+        COMEDY       0.68      0.57      0.62       144
+ ENTERTAINMENT       0.63      0.79      0.70       743
+  FOOD & DRINK       0.71      0.19      0.30        26
+HEALTHY LIVING       0.20      0.06      0.10        31
+ HOME & LIVING       0.64      0.23      0.34        30
+     PARENTING       0.71      0.46      0.56        26
+       PARENTS       0.17      0.14      0.15        22
+      POLITICS       0.87      0.90      0.89      1499
+  QUEER VOICES       0.75      0.54      0.63       125
+        SPORTS       0.76      0.60      0.67       119
+STYLE & BEAUTY       0.42      0.24      0.31        33
+        TRAVEL       0.56      0.33      0.42        15
+      WELLNESS       0.59      0.37      0.45        27
+
+      accuracy                           0.76      3000
+     macro avg       0.57      0.40      0.45      3000
+  weighted avg       0.75      0.76      0.74      3000
+
+Random Forest Accuracy: 0.7713333333333333
+        Time taken: 62.073344469070435 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.76      0.30      0.43       116
+      BUSINESS       0.50      0.05      0.08        44
+        COMEDY       0.75      0.54      0.63       144
+ ENTERTAINMENT       0.65      0.83      0.73       743
+  FOOD & DRINK       0.67      0.15      0.25        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       0.86      0.20      0.32        30
+     PARENTING       0.75      0.46      0.57        26
+       PARENTS       0.75      0.14      0.23        22
+      POLITICS       0.84      0.95      0.89      1499
+  QUEER VOICES       0.90      0.43      0.58       125
+        SPORTS       0.76      0.55      0.64       119
+STYLE & BEAUTY       0.56      0.27      0.37        33
+        TRAVEL       0.67      0.27      0.38        15
+      WELLNESS       0.86      0.22      0.35        27
+
+      accuracy                           0.77      3000
+     macro avg       0.75      0.36      0.43      3000
+  weighted avg       0.78      0.77      0.74      3000
+
+Logistic Regression Accuracy: 0.7833333333333333
+        Time taken: 7.361515760421753 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.75      0.31      0.44       116
+      BUSINESS       1.00      0.00      0.00        44
+        COMEDY       0.75      0.50      0.60       144
+ ENTERTAINMENT       0.71      0.86      0.78       743
+  FOOD & DRINK       1.00      0.12      0.21        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       1.00      0.27      0.42        30
+     PARENTING       0.86      0.46      0.60        26
+       PARENTS       0.50      0.05      0.08        22
+      POLITICS       0.82      0.97      0.89      1499
+  QUEER VOICES       0.86      0.45      0.59       125
+        SPORTS       0.83      0.45      0.59       119
+STYLE & BEAUTY       1.00      0.27      0.43        33
+        TRAVEL       1.00      0.13      0.24        15
+      WELLNESS       1.00      0.07      0.14        27
+
+      accuracy                           0.78      3000
+     macro avg       0.87      0.33      0.40      3000
+  weighted avg       0.80      0.78      0.75      3000
+
+Boosting Accuracy: 0.7043333333333334
+        Time taken: 17.283517360687256 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.40      0.34      0.37       116
+      BUSINESS       0.20      0.14      0.16        44
+        COMEDY       0.58      0.53      0.55       144
+ ENTERTAINMENT       0.64      0.68      0.66       743
+  FOOD & DRINK       0.40      0.23      0.29        26
+HEALTHY LIVING       0.07      0.06      0.07        31
+ HOME & LIVING       0.40      0.40      0.40        30
+     PARENTING       0.71      0.46      0.56        26
+       PARENTS       0.14      0.14      0.14        22
+      POLITICS       0.85      0.87      0.86      1499
+  QUEER VOICES       0.55      0.49      0.52       125
+        SPORTS       0.56      0.56      0.56       119
+STYLE & BEAUTY       0.40      0.30      0.34        33
+        TRAVEL       0.26      0.33      0.29        15
+      WELLNESS       0.42      0.41      0.42        27
+
+      accuracy                           0.70      3000
+     macro avg       0.44      0.40      0.41      3000
+  weighted avg       0.70      0.70      0.70      3000
+
+Hard Voting Accuracy: 0.7803333333333333
+        Time taken: 206.79902458190918 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.69      0.35      0.47       116
+      BUSINESS       0.40      0.05      0.08        44
+        COMEDY       0.72      0.55      0.62       144
+ ENTERTAINMENT       0.66      0.85      0.74       743
+  FOOD & DRINK       0.67      0.15      0.25        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       0.86      0.20      0.32        30
+     PARENTING       0.74      0.54      0.62        26
+       PARENTS       1.00      0.09      0.17        22
+      POLITICS       0.85      0.95      0.90      1499
+  QUEER VOICES       0.90      0.50      0.65       125
+        SPORTS       0.78      0.54      0.64       119
+STYLE & BEAUTY       0.70      0.21      0.33        33
+        TRAVEL       0.67      0.27      0.38        15
+      WELLNESS       1.00      0.19      0.31        27
+
+      accuracy                           0.78      3000
+     macro avg       0.78      0.36      0.43      3000
+  weighted avg       0.78      0.78      0.75      3000
+
+Soft Voting Accuracy: 0.781
+        Time taken: 202.07152724266052 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.70      0.37      0.49       116
+      BUSINESS       0.29      0.05      0.08        44
+        COMEDY       0.74      0.54      0.62       144
+ ENTERTAINMENT       0.67      0.84      0.74       743
+  FOOD & DRINK       0.80      0.15      0.26        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       0.71      0.17      0.27        30
+     PARENTING       0.75      0.46      0.57        26
+       PARENTS       0.11      0.05      0.06        22
+      POLITICS       0.86      0.95      0.90      1499
+  QUEER VOICES       0.81      0.49      0.61       125
+        SPORTS       0.79      0.62      0.69       119
+STYLE & BEAUTY       0.67      0.18      0.29        33
+        TRAVEL       0.50      0.27      0.35        15
+      WELLNESS       0.83      0.37      0.51        27
+
+      accuracy                           0.78      3000
+     macro avg       0.68      0.37      0.43      3000
+  weighted avg       0.77      0.78      0.76      3000
+
+Weighted Voting Accuracy: 0.78
+        Time taken: 0.2539958953857422 seconds
+  File "c:\Users\Helmut\IS\IS_assignment2\models.py", line 326, in <module>
+    model_xgb.fit(X_train_vec, y_train)
+  File "C:\Users\Helmut\AppData\Local\Programs\Python\Python310\lib\site-packages\xgboost\core.py", line 730, in inner_f
+    return func(**kwargs)
+  File "C:\Users\Helmut\AppData\Local\Programs\Python\Python310\lib\site-packages\xgboost\sklearn.py", line 1471, in fit
+    raise ValueError(
+ValueError: Invalid classes inferred from unique values of `y`.  Expected: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14], got ['BLACK VOICES' 'BUSINESS' 'COMEDY' 'ENTERTAINMENT' 'FOOD & DRINK'
+ 'HEALTHY LIVING' 'HOME & LIVING' 'PARENTING' 'PARENTS' 'POLITICS'
+ 'QUEER VOICES' 'SPORTS' 'STYLE & BEAUTY' 'TRAVEL' 'WELLNESS']
+PS C:\Users\Helmut\IS\IS_assignment2> & C:/Users/Helmut/AppData/Local/Programs/Python/Python310/python.exe c:/Users/Helmut/IS/IS_assignment2/models.py
+Decision Tree Accuracy: 0.709
+        Time taken: 13.932673931121826 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.39      0.36      0.38       116
+      BUSINESS       0.26      0.16      0.20        44
+        COMEDY       0.58      0.52      0.55       144
+ ENTERTAINMENT       0.64      0.69      0.66       743
+  FOOD & DRINK       0.46      0.23      0.31        26
+HEALTHY LIVING       0.05      0.03      0.04        31
+ HOME & LIVING       0.37      0.43      0.40        30
+     PARENTING       0.79      0.42      0.55        26
+       PARENTS       0.15      0.18      0.16        22
+      POLITICS       0.85      0.87      0.86      1499
+  QUEER VOICES       0.58      0.50      0.54       125
+        SPORTS       0.58      0.55      0.57       119
+STYLE & BEAUTY       0.46      0.36      0.41        33
+        TRAVEL       0.19      0.33      0.24        15
+      WELLNESS       0.43      0.37      0.40        27
+
+      accuracy                           0.71      3000
+     macro avg       0.45      0.40      0.42      3000
+  weighted avg       0.70      0.71      0.70      3000
+
+Naive Bayes Accuracy: 0.686
+        Time taken: 0.03917980194091797 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       1.00      0.00      0.00       116
+      BUSINESS       1.00      0.00      0.00        44
+        COMEDY       1.00      0.01      0.03       144
+ ENTERTAINMENT       0.74      0.75      0.75       743
+  FOOD & DRINK       1.00      0.00      0.00        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       1.00      0.00      0.00        30
+     PARENTING       1.00      0.00      0.00        26
+       PARENTS       1.00      0.00      0.00        22
+      POLITICS       0.67      1.00      0.80      1499
+  QUEER VOICES       1.00      0.00      0.00       125
+        SPORTS       1.00      0.06      0.11       119
+STYLE & BEAUTY       1.00      0.00      0.00        33
+        TRAVEL       1.00      0.00      0.00        15
+      WELLNESS       1.00      0.00      0.00        27
+
+      accuracy                           0.69      3000
+     macro avg       0.96      0.12      0.11      3000
+  weighted avg       0.77      0.69      0.59      3000
+
+K-Nearest Neighbors Accuracy: 0.7593333333333333
+        Time taken: 2.4042584896087646 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.64      0.18      0.28       116
+      BUSINESS       0.00      0.00      1.00        44
+        COMEDY       0.64      0.57      0.60       144
+ ENTERTAINMENT       0.77      0.74      0.76       743
+  FOOD & DRINK       0.76      0.50      0.60        26
+HEALTHY LIVING       0.50      0.03      0.06        31
+ HOME & LIVING       0.80      0.40      0.53        30
+     PARENTING       0.78      0.54      0.64        26
+       PARENTS       0.20      0.05      0.07        22
+      POLITICS       0.77      0.97      0.86      1499
+  QUEER VOICES       0.74      0.39      0.51       125
+        SPORTS       0.74      0.50      0.59       119
+STYLE & BEAUTY       0.70      0.42      0.53        33
+        TRAVEL       0.43      0.20      0.27        15
+      WELLNESS       1.00      0.15      0.26        27
+
+      accuracy                           0.76      3000
+     macro avg       0.63      0.38      0.50      3000
+  weighted avg       0.74      0.76      0.74      3000
+
+Bagging Accuracy: 0.756
+        Time taken: 131.83955311775208 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.55      0.41      0.47       116
+      BUSINESS       0.38      0.14      0.20        44
+        COMEDY       0.68      0.57      0.62       144
+ ENTERTAINMENT       0.63      0.79      0.70       743
+  FOOD & DRINK       0.71      0.19      0.30        26
+HEALTHY LIVING       0.20      0.06      0.10        31
+ HOME & LIVING       0.64      0.23      0.34        30
+     PARENTING       0.71      0.46      0.56        26
+       PARENTS       0.17      0.14      0.15        22
+      POLITICS       0.87      0.90      0.89      1499
+  QUEER VOICES       0.75      0.54      0.63       125
+        SPORTS       0.76      0.60      0.67       119
+STYLE & BEAUTY       0.42      0.24      0.31        33
+        TRAVEL       0.56      0.33      0.42        15
+      WELLNESS       0.59      0.37      0.45        27
+
+      accuracy                           0.76      3000
+     macro avg       0.57      0.40      0.45      3000
+  weighted avg       0.75      0.76      0.74      3000
+
+Random Forest Accuracy: 0.7713333333333333
+        Time taken: 62.841694593429565 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.76      0.30      0.43       116
+      BUSINESS       0.50      0.05      0.08        44
+        COMEDY       0.75      0.54      0.63       144
+ ENTERTAINMENT       0.65      0.83      0.73       743
+  FOOD & DRINK       0.67      0.15      0.25        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       0.86      0.20      0.32        30
+     PARENTING       0.75      0.46      0.57        26
+       PARENTS       0.75      0.14      0.23        22
+      POLITICS       0.84      0.95      0.89      1499
+  QUEER VOICES       0.90      0.43      0.58       125
+        SPORTS       0.76      0.55      0.64       119
+STYLE & BEAUTY       0.56      0.27      0.37        33
+        TRAVEL       0.67      0.27      0.38        15
+      WELLNESS       0.86      0.22      0.35        27
+
+      accuracy                           0.77      3000
+     macro avg       0.75      0.36      0.43      3000
+  weighted avg       0.78      0.77      0.74      3000
+
+Logistic Regression Accuracy: 0.7833333333333333
+        Time taken: 6.275044679641724 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.75      0.31      0.44       116
+      BUSINESS       1.00      0.00      0.00        44
+        COMEDY       0.75      0.50      0.60       144
+ ENTERTAINMENT       0.71      0.86      0.78       743
+  FOOD & DRINK       1.00      0.12      0.21        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       1.00      0.27      0.42        30
+     PARENTING       0.86      0.46      0.60        26
+       PARENTS       0.50      0.05      0.08        22
+      POLITICS       0.82      0.97      0.89      1499
+  QUEER VOICES       0.86      0.45      0.59       125
+        SPORTS       0.83      0.45      0.59       119
+STYLE & BEAUTY       1.00      0.27      0.43        33
+        TRAVEL       1.00      0.13      0.24        15
+      WELLNESS       1.00      0.07      0.14        27
+
+      accuracy                           0.78      3000
+     macro avg       0.87      0.33      0.40      3000
+  weighted avg       0.80      0.78      0.75      3000
+
+Boosting Accuracy: 0.7043333333333334
+        Time taken: 15.824576616287231 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.40      0.34      0.37       116
+      BUSINESS       0.20      0.14      0.16        44
+        COMEDY       0.58      0.53      0.55       144
+ ENTERTAINMENT       0.64      0.68      0.66       743
+  FOOD & DRINK       0.40      0.23      0.29        26
+HEALTHY LIVING       0.07      0.06      0.07        31
+ HOME & LIVING       0.40      0.40      0.40        30
+     PARENTING       0.71      0.46      0.56        26
+       PARENTS       0.14      0.14      0.14        22
+      POLITICS       0.85      0.87      0.86      1499
+  QUEER VOICES       0.55      0.49      0.52       125
+        SPORTS       0.56      0.56      0.56       119
+STYLE & BEAUTY       0.40      0.30      0.34        33
+        TRAVEL       0.26      0.33      0.29        15
+      WELLNESS       0.42      0.41      0.42        27
+
+      accuracy                           0.70      3000
+     macro avg       0.44      0.40      0.41      3000
+  weighted avg       0.70      0.70      0.70      3000
+
+Hard Voting Accuracy: 0.7803333333333333
+        Time taken: 210.27150654792786 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.69      0.35      0.47       116
+      BUSINESS       0.40      0.05      0.08        44
+        COMEDY       0.72      0.55      0.62       144
+ ENTERTAINMENT       0.66      0.85      0.74       743
+  FOOD & DRINK       0.67      0.15      0.25        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       0.86      0.20      0.32        30
+     PARENTING       0.74      0.54      0.62        26
+       PARENTS       1.00      0.09      0.17        22
+      POLITICS       0.85      0.95      0.90      1499
+  QUEER VOICES       0.90      0.50      0.65       125
+        SPORTS       0.78      0.54      0.64       119
+STYLE & BEAUTY       0.70      0.21      0.33        33
+        TRAVEL       0.67      0.27      0.38        15
+      WELLNESS       1.00      0.19      0.31        27
+
+      accuracy                           0.78      3000
+     macro avg       0.78      0.36      0.43      3000
+  weighted avg       0.78      0.78      0.75      3000
+
+Soft Voting Accuracy: 0.781
+        Time taken: 202.71129965782166 seconds
+                precision    recall  f1-score   support
+
+  BLACK VOICES       0.70      0.37      0.49       116
+      BUSINESS       0.29      0.05      0.08        44
+        COMEDY       0.74      0.54      0.62       144
+ ENTERTAINMENT       0.67      0.84      0.74       743
+  FOOD & DRINK       0.80      0.15      0.26        26
+HEALTHY LIVING       1.00      0.00      0.00        31
+ HOME & LIVING       0.71      0.17      0.27        30
+     PARENTING       0.75      0.46      0.57        26
+       PARENTS       0.11      0.05      0.06        22
+      POLITICS       0.86      0.95      0.90      1499
+  QUEER VOICES       0.81      0.49      0.61       125
+        SPORTS       0.79      0.62      0.69       119
+STYLE & BEAUTY       0.67      0.18      0.29        33
+        TRAVEL       0.50      0.27      0.35        15
+      WELLNESS       0.83      0.37      0.51        27
+
+      accuracy                           0.78      3000
+     macro avg       0.68      0.37      0.43      3000
+  weighted avg       0.77      0.78      0.76      3000
+
+Weighted Voting Accuracy: 0.78
+        Time taken: 0.2520475387573242 seconds
+XGBoost Accuracy: 0.7546666666666667
+        Time taken: 36.866995334625244 seconds
+              precision    recall  f1-score   support
+
+           0       0.63      0.34      0.44       115
+           1       0.62      0.15      0.24        34
+           2       0.81      0.56      0.66       172
+           3       0.71      0.73      0.72       702
+           4       1.00      0.36      0.53        22
+           5       1.00      0.00      0.00        16
+           6       0.46      0.32      0.37        19
+           7       0.59      0.40      0.48        25
+           8       0.33      0.09      0.15        32
+           9       0.77      0.94      0.85      1503
+          10       0.76      0.50      0.60       123
+          11       0.85      0.51      0.64       133
+          12       0.87      0.32      0.46        41
+          13       0.77      0.36      0.49        28
+          14       0.87      0.37      0.52        35
+
+    accuracy                           0.75      3000
+   macro avg       0.74      0.40      0.48      3000
+weighted avg       0.75      0.75      0.73      3000
+
+
+The model with the highest accuracy is: Logistic Regression
+
+              precision    recall  f1-score   support
+
+           0       0.08      0.03      0.05       115
+           1       1.00      0.00      0.00        34
+           2       0.10      0.06      0.07       172
+           3       0.21      0.27      0.24       702
+           4       0.00      0.00      1.00        22
+           5       1.00      0.00      0.00        16
+           6       0.12      0.05      0.07        19
+           7       0.00      0.00      1.00        25
+           8       0.00      0.00      1.00        32
+           9       0.50      0.60      0.55      1503
+          10       0.05      0.02      0.03       123
+          11       0.03      0.02      0.02       133
+          12       0.00      0.00      1.00        41
+          13       0.00      0.00      1.00        28
+          14       0.50      0.03      0.05        35
+
+    accuracy                           0.37      3000
+   macro avg       0.24      0.07      0.41      3000
+weighted avg       0.34      0.37      0.39      3000
+
+ -> Cross-Validation Scores: [0.765      0.76708333 0.75333333 0.76833333 0.75166667]
