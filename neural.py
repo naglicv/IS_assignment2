@@ -111,8 +111,8 @@ def preprocess_text(text):
     result = one_hot(text, round(vocab_size*1.3))
     return result
 
-df = pd.read_csv("./datasets/cleaned.csv")
-df = df[:10000].copy()
+df = pd.read_csv("./datasets/1000.csv")
+#df = df[80000:95000].copy()
 len = df.clean_text.map(len).max()
 print(len)
 
@@ -141,7 +141,7 @@ ff_dim = 64  # Hidden layer size in feed forward network inside transformer
 
 inputs = layers.Input(shape=(maxlen,))
 #437
-embedding_layer = TokenAndPositionEmbedding(maxlen, 437, embed_dim)
+embedding_layer = TokenAndPositionEmbedding(maxlen, 500, embed_dim)
 x = embedding_layer(inputs)
 transformer_block = TransformerBlock(embed_dim, num_heads, ff_dim)
 x = transformer_block(x)
@@ -163,6 +163,9 @@ model.compile("adam", "sparse_categorical_crossentropy", metrics=["accuracy"])
 history = model.fit(
     x_train, y_train, batch_size=64, epochs=20, validation_data=(x_val, y_val)
 )
+
+
+#print(classification_report(y_val, history, zero_division=1))
 
 #plot_history(history)
 
