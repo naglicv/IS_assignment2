@@ -128,7 +128,7 @@ X['clean_text'] = X['clean_text'].fillna('').apply(preprocess_text)
 
 
 
-x_train, x_val, y_train, y_val = train_test_split(X['clean_text'], y, test_size=0.3, random_state=42)
+x_train, x_val, y_train, y_val = train_test_split(X['clean_text'], y, test_size=0.25, random_state=42)
 
 maxlen=336
 
@@ -136,7 +136,7 @@ x_train = keras.preprocessing.sequence.pad_sequences(x_train, maxlen)
 x_val = keras.preprocessing.sequence.pad_sequences(x_val, maxlen)
 
 embed_dim = 64  # Embedding size for each token
-num_heads = 2  # Number of attention heads
+num_heads = 4  # Number of attention heads
 ff_dim = 64  # Hidden layer size in feed forward network inside transformer
 
 inputs = layers.Input(shape=(maxlen,))
@@ -145,13 +145,15 @@ embedding_layer = TokenAndPositionEmbedding(maxlen, 437, embed_dim)
 x = embedding_layer(inputs)
 transformer_block = TransformerBlock(embed_dim, num_heads, ff_dim)
 x = transformer_block(x)
-x = layers.GlobalAveragePooling1D()(x)
+x = layers.GlobalMaxPooling1D()(x)
 x = layers.Dropout(0.11)(x)
 x = layers.Dense(16*16, activation="relu")(x)
 x = layers.Dropout(0.15)(x)
-x = layers.Dense(16*8, activation="relu")(x)
+x = layers.Dense(16*32, activation="relu")(x)
 x = layers.Dropout(0.15)(x)
-x = layers.Dense(16*2, activation="relu")(x)
+x = layers.Dense(16*16, activation="relu")(x)
+x = layers.Dropout(0.15)(x)
+x = layers.Dense(16*8, activation="relu")(x)
 x = layers.Dropout(0.15)(x)
 outputs = layers.Dense(16, activation="softmax")(x)
 
@@ -159,7 +161,7 @@ model = keras.Model(inputs=inputs, outputs=outputs)
 
 model.compile("adam", "sparse_categorical_crossentropy", metrics=["accuracy"])
 history = model.fit(
-    x_train, y_train, batch_size=32, epochs=12, validation_data=(x_val, y_val)
+    x_train, y_train, batch_size=64, epochs=20, validation_data=(x_val, y_val)
 )
 
 #plot_history(history)
