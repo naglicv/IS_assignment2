@@ -15,36 +15,37 @@ from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.utils.class_weight import compute_class_weight
+
+
 
 df = pd.read_csv("./datasets/cleaned.csv")
-df = df[:15000].copy()
-#len = df.clean_text.map(len).max()
-#print(len)
+df = df[:10000].copy()
 
+class_weights = compute_class_weight(class_weight ='balanced',
+classes=np.unique(df['category']),y = df['category'])
+class_weights.sort()
+
+print(class_weights)
+
+#print(df[['clean_head','headline', 'clean_desc','short_description']][:10])
+# Split the data into features (X) and target variable (y)
 X = df.drop('category', axis=1)
-#X['clean_text'] = X['clean_text'] + " " + X['clean_desc']
+X['clean_text'] = X['clean_text'] + " " + X['clean_desc']
 y = pd.Categorical(df['category'])
 
+# Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
 
 vectorizer = TfidfVectorizer()
 X_train_vec = vectorizer.fit_transform(X_train['clean_text'].values.astype('U'))
 X_test_vec = vectorizer.transform(X_test['clean_text'].values.astype('U'))
 
-# Decision Tree
 
 
-#param_grid = {'n_estimators': [50, 60]}  # Adjust the values as needed
-param_grid = { 'n_neighbors': range(5, 30)}
-#base_estimator = KNeighborsClassifier(n_neighbors=9)  # You can use another base estimator if needed
-#
-#bagging_model = BaggingClassifier(base_estimator=base_estimator)
-knnnn = KNeighborsClassifier()
-grid_search = GridSearchCV(knnnn, param_grid, cv=4, scoring='accuracy')  # You can adjust the number of folds (cv) as needed
-grid_search.fit(X_train_vec, y_train)  # Assuming X_train and y_train are your training data
-
-best_bagging_model = grid_search.best_estimator_
-
-accuracy = best_bagging_model.score(X_test_vec, y_test)  # Assuming X_test and y_test are your test data
-print(f"Best n_estimators: {grid_search.best_params_}, Best Model Accuracy: {accuracy}")
-
+model_rf = RandomForestClassifier(criterion='gini', n_estimators=150, random_state=42)
+model_rf.fit(X_train_vec, y_train)
+pred_rf = model_rf.predict(X_test_vec)
+result_rf = accuracy_score(y_test, pred_rf)
+print("Random Forest Accuracy:", result_rf)

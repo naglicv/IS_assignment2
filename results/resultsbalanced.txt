@@ -57,29 +57,29 @@ STYLE & BEAUTY       0.77      0.81      0.79       187
 Cross-Validation Scores: [0.68333333 0.68625    0.68041667 0.68916667 0.6675    ]
 
 
-K-Nearest Neighbors Accuracy: 0.124
+K-Nearest Neighbors Accuracy: 0.5683333333333334
+        Time taken: 3.866999864578247 seconds
+                precision    recall  f1-score   support
 
-                 precision    recall  f1-score   support
+  BLACK VOICES       0.55      0.61      0.58       197
+      BUSINESS       0.33      0.76      0.46       206
+        COMEDY       0.65      0.73      0.69       219
+ ENTERTAINMENT       0.54      0.42      0.47       193
+  FOOD & DRINK       0.65      0.77      0.71       186
+HEALTHY LIVING       0.40      0.47      0.43       180
+ HOME & LIVING       0.68      0.67      0.68       190
+     PARENTING       0.38      0.30      0.34       207
+       PARENTS       0.40      0.45      0.42       182
+      POLITICS       0.77      0.61      0.68       203
+  QUEER VOICES       0.80      0.47      0.60       234
+        SPORTS       0.79      0.66      0.72       215
+STYLE & BEAUTY       0.74      0.69      0.71       187
+        TRAVEL       0.73      0.64      0.68       192
+      WELLNESS       0.57      0.28      0.38       209
 
-  BLACK VOICES       0.49      0.51      0.50       197
-      BUSINESS       0.07      0.99      0.14       206
-        COMEDY       1.00      0.02      0.04       219
- ENTERTAINMENT       1.00      0.02      0.04       193
-  FOOD & DRINK       1.00      0.03      0.06       186
-HEALTHY LIVING       1.00      0.02      0.04       180
- HOME & LIVING       0.83      0.08      0.14       190
-     PARENTING       0.78      0.03      0.06       207
-       PARENTS       0.14      0.01      0.01       182
-      POLITICS       1.00      0.00      0.01       203
-  QUEER VOICES       1.00      0.02      0.03       234
-        SPORTS       1.00      0.03      0.06       215
-STYLE & BEAUTY       1.00      0.06      0.12       187
-        TRAVEL       0.75      0.02      0.03       192
-      WELLNESS       1.00      0.00      0.00       209
-
-      accuracy                           0.12      3000
-     macro avg       0.80      0.12      0.09      3000
-  weighted avg       0.81      0.12      0.09      3000
+      accuracy                           0.57      3000
+     macro avg       0.60      0.57      0.57      3000
+  weighted avg       0.60      0.57      0.57      3000
 
 Cross-Validation Scores: [0.10458333 0.1175     0.11083333 0.4525     0.11291667]
 

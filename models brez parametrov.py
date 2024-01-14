@@ -54,7 +54,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_DT, zero_division=1))
 
 # Naive Bayes
-model_NB = MultinomialNB(alpha=0.6, fit_prior=False)
+model_NB = MultinomialNB()
 # Start the timer
 start_time = time.time()
 model_NB.fit(X_train_vec, y_train)
@@ -69,7 +69,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_NB, zero_division=1))
 
 # K-Nearest Neighbors
-model_KNN = KNeighborsClassifier(n_neighbors=9)
+model_KNN = KNeighborsClassifier()
 # Start the timer
 start_time = time.time()
 model_KNN.fit(X_train_vec, y_train)
@@ -84,7 +84,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_KNN, zero_division=1))
 
 # Bagging
-model_bagging = BaggingClassifier(estimator=MultinomialNB(alpha=0.6, fit_prior=False), n_estimators=50, random_state=8678686)
+model_bagging = BaggingClassifier(estimator=DecisionTreeClassifier(), random_state=8678686)
 # Start the timer
 start_time = time.time()
 model_bagging.fit(X_train_vec, y_train)
@@ -99,7 +99,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_bagging, zero_division=1))
 
 # Random Forest
-model_rf = RandomForestClassifier(max_depth=150, random_state=8678686)
+model_rf = RandomForestClassifier(random_state=8678686)
 # Start the timer
 start_time = time.time()
 model_rf.fit(X_train_vec, y_train)
@@ -114,7 +114,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_rf, zero_division=1))
 
 # Logistic Regression
-model_lr = LogisticRegression(class_weight='balanced', max_iter=1000, random_state=42)
+model_lr = LogisticRegression(max_iter=1000, random_state=42)
 # Start the timer
 start_time = time.time()
 model_lr.fit(X_train_vec, y_train)
@@ -144,7 +144,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_boosting, zero_division=1))
 
 # Hard Voting
-model_voting_hard = VotingClassifier(estimators=[('rf', model_bagging), ('lr', model_lr), ('nb', model_NB)], voting='hard')
+model_voting_hard = VotingClassifier(estimators=[('rf', model_rf), ('lr', model_lr), ('bg', model_bagging)], voting='hard')
 # Start the timer
 start_time = time.time()
 model_voting_hard.fit(X_train_vec, y_train)
@@ -159,7 +159,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_voting_hard, zero_division=1))
 
 # Soft Voting
-model_voting_soft = VotingClassifier(estimators=[('rf', model_bagging), ('lr', model_lr), ('nb', model_NB)], voting='soft')
+model_voting_soft = VotingClassifier(estimators=[('rf', model_rf), ('lr', model_lr), ('bg', model_bagging)], voting='soft')
 # Start the timer
 start_time = time.time()
 model_voting_soft.fit(X_train_vec, y_train)
@@ -173,22 +173,20 @@ elapsed_time = end_time - start_time
 print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_voting_soft, zero_division=1))
 
-
 # Weighted Voting 
 # Start the timer
-'''start_time = time.time()
+start_time = time.time()
 pred_rf_prob = model_rf.predict_proba(X_test_vec)
 pred_lr_prob = model_lr.predict_proba(X_test_vec)
-pred_nb_prob = model_NB.predict_proba(X_test_vec)
+pred_bagging_prob = model_bagging.predict_proba(X_test_vec)
 
 weighted_rf_prob = result_rf * pred_rf_prob
 weighted_lr_prob = result_lr * pred_lr_prob
-weighted_nb_prob = result_bagging * pred_nb_prob
+weighted_bagging_prob = result_bagging * pred_bagging_prob
 
-pred_prob = weighted_rf_prob + weighted_lr_prob + weighted_nb_prob
+pred_prob = weighted_rf_prob + weighted_lr_prob + weighted_bagging_prob
 predicted_labels = np.argmax(pred_prob, axis=1)
-#print(classification_report(y_test, pred_prob, zero_division=1))'''
-
+#print(classification_report(y_test, pred_prob, zero_division=1))
 
 
 # int2class conversion dict
@@ -211,14 +209,14 @@ class_conv = {
 }
 
 # Evaluate
-'''predicted_labels = [class_conv[i] for i in predicted_labels]
+predicted_labels = [class_conv[i] for i in predicted_labels]
 result_wvoting = accuracy_score(y_test, predicted_labels)
 print("Weighted Voting Accuracy:", result_wvoting)
 # Stop the timer
 end_time = time.time()
 # Calculate the elapsed time
 elapsed_time = end_time - start_time
-print(f"\tTime taken: {elapsed_time} seconds")'''
+print(f"\tTime taken: {elapsed_time} seconds")
 
 # Label encoding
 label_encoder = LabelEncoder()
@@ -234,7 +232,7 @@ X_test_vec = vectorizer.transform(X_test['clean_text'].values.astype('U'))
 #XGBoost
 # Start the timer
 start_time = time.time()
-model_xgb = XGBClassifier(random_state=42)
+model_xgb = XGBClassifier()
 model_xgb.fit(X_train_vec, y_train)
 pred_xgb = model_xgb.predict(X_test_vec)
 result_xgb = accuracy_score(y_test, pred_xgb)
@@ -255,7 +253,7 @@ models = {
     "Logistic Regression": {"model": model_lr, "prediction": pred_lr, "performance": result_lr, "is_ensemble": False},
     "Hard Voting": {"model": model_voting_hard, "prediction": pred_voting_hard, "performance": result_voting_hard, "is_ensemble": True},
     "Soft Voting": {"model": model_voting_soft, "prediction": pred_voting_soft, "performance": result_voting_soft, "is_ensemble": True},
-    #"Weighted Voting": {"model": None, "prediction": predicted_labels, "performance": result_wvoting, "is_ensemble": True},
+    "Weighted Voting": {"model": None, "prediction": predicted_labels, "performance": result_wvoting, "is_ensemble": True},
     "Bagging": {"model": model_bagging, "prediction": pred_bagging, "performance": result_bagging, "is_ensemble": True},
     "Random Forest": {"model": model_rf, "prediction": pred_rf, "performance": result_rf, "is_ensemble": True},
     "Boosting": {"model": model_boosting, "prediction": pred_boosting, "performance": result_boosting, "is_ensemble": True},
@@ -284,9 +282,9 @@ print(classification_report(y_test, best_predictions, zero_division=1))
 
 # Calculate cross-validation scores for the best model
 # Note: For weighted voting, cross-validation is not directly applicable as it involves combining predictions
-'''if best_model is not None:
+if best_model is not None:
     scores = cross_val_score(best_model, X_train_vec, y_train, cv=5)
-    print(" -> Cross-Validation Scores:", scores)'''
+    print(" -> Cross-Validation Scores:", scores)
        
 # Visualization
 result_df = pd.DataFrame([(name, model['performance'], model['is_ensemble']) for name, model in models.items()], columns=['Algorithm', 'Performance', 'Ensemble Model'])
