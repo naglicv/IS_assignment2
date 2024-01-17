@@ -14,17 +14,15 @@ from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from xgboost import XGBClassifier
 import seaborn as sns
 import matplotlib.pyplot as plt
-from imblearn.over_sampling import SMOTE
 import time
 from sklearn.utils import compute_class_weight
 from scipy.stats import randint
 from sklearn.dummy import DummyClassifier
-   
-#df = pd.read_csv("./datasets/cleaned.csv")
-#df = df[:15000].copy()
-df = pd.read_csv("./datasets/1000.csv")
 
-#print(df[['clean_head','headline', 'clean_desc','short_description']][:10])
+# Load cleaned data
+df = pd.read_csv("./datasets/cleaned.csv")
+df = df[:15000].copy()
+
 # Split the data into features (X) and target variable (y)
 X = df.drop('category', axis=1)
 y = pd.Categorical(df['category'])
@@ -32,11 +30,10 @@ y = pd.Categorical(df['category'])
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-
+# Vectorize data
 vectorizer = TfidfVectorizer()
 X_train_vec = vectorizer.fit_transform(X_train['clean_text'].values.astype('U'))
 X_test_vec = vectorizer.transform(X_test['clean_text'].values.astype('U'))
-
 
 # Decision Tree
 model_DT = DecisionTreeClassifier(random_state=42)
@@ -173,21 +170,6 @@ elapsed_time = end_time - start_time
 print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_voting_soft, zero_division=1))
 
-# Weighted Voting 
-# Start the timer
-start_time = time.time()
-pred_rf_prob = model_rf.predict_proba(X_test_vec)
-pred_lr_prob = model_lr.predict_proba(X_test_vec)
-pred_bagging_prob = model_bagging.predict_proba(X_test_vec)
-
-weighted_rf_prob = result_rf * pred_rf_prob
-weighted_lr_prob = result_lr * pred_lr_prob
-weighted_bagging_prob = result_bagging * pred_bagging_prob
-
-pred_prob = weighted_rf_prob + weighted_lr_prob + weighted_bagging_prob
-predicted_labels = np.argmax(pred_prob, axis=1)
-#print(classification_report(y_test, pred_prob, zero_division=1))
-
 
 # int2class conversion dict
 class_conv = {
@@ -208,21 +190,12 @@ class_conv = {
     14: 'WELLNESS'
 }
 
-# Evaluate
-predicted_labels = [class_conv[i] for i in predicted_labels]
-result_wvoting = accuracy_score(y_test, predicted_labels)
-print("Weighted Voting Accuracy:", result_wvoting)
-# Stop the timer
-end_time = time.time()
-# Calculate the elapsed time
-elapsed_time = end_time - start_time
-print(f"\tTime taken: {elapsed_time} seconds")
 
 # Label encoding
 label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
-# Splitting the dataset into the Training set and Test set
+# Splitting the dataset into the Training set and Test set for XGBoost
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=8678686)
 
 X_train_vec = vectorizer.fit_transform(X_train['clean_text'].values.astype('U'))
@@ -253,7 +226,6 @@ models = {
     "Logistic Regression": {"model": model_lr, "prediction": pred_lr, "performance": result_lr, "is_ensemble": False},
     "Hard Voting": {"model": model_voting_hard, "prediction": pred_voting_hard, "performance": result_voting_hard, "is_ensemble": True},
     "Soft Voting": {"model": model_voting_soft, "prediction": pred_voting_soft, "performance": result_voting_soft, "is_ensemble": True},
-    "Weighted Voting": {"model": None, "prediction": predicted_labels, "performance": result_wvoting, "is_ensemble": True},
     "Bagging": {"model": model_bagging, "prediction": pred_bagging, "performance": result_bagging, "is_ensemble": True},
     "Random Forest": {"model": model_rf, "prediction": pred_rf, "performance": result_rf, "is_ensemble": True},
     "Boosting": {"model": model_boosting, "prediction": pred_boosting, "performance": result_boosting, "is_ensemble": True},

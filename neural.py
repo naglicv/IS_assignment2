@@ -1,20 +1,12 @@
 import pandas as pd
-import matplotlib as plt
 import tensorflow as tf
 from tensorflow import keras
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
 from keras.preprocessing.text import text_to_word_sequence
 from tensorflow.keras import layers
 import pandas as pd
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-from nltk.stem import PorterStemmer
 from sklearn.model_selection import train_test_split
-from gensim.models import Word2Vec
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
 from keras.preprocessing.text import one_hot
 from sklearn.utils.class_weight import compute_class_weight
 
@@ -111,22 +103,17 @@ def preprocess_text(text):
     result = one_hot(text, round(vocab_size*1.3))
     return result
 
-df = pd.read_csv("./datasets/1000.csv")
-#df = df[80000:95000].copy()
+df = pd.read_csv("./datasets/cleaned.csv")
+df = df[:15000].copy()
 len = df.clean_text.map(len).max()
 print(len)
 
-#print(df[['clean_head','headline', 'clean_desc','short_description']][:10])
 # Split the data into features (X) and target variable (y)
 X = df.drop('category', axis=1)
 df['category'] = pd.factorize(df['category'])[0] + 1
 y = df['category']
 
 X['clean_text'] = X['clean_text'].fillna('').apply(preprocess_text)
-#y = y.apply(preprocess_text)
-
-
-
 
 x_train, x_val, y_train, y_val = train_test_split(X['clean_text'], y, test_size=0.25, random_state=42)
 
@@ -146,28 +133,22 @@ x = embedding_layer(inputs)
 transformer_block = TransformerBlock(embed_dim, num_heads, ff_dim)
 x = transformer_block(x)
 x = layers.GlobalMaxPooling1D()(x)
-x = layers.Dropout(0.11)(x)
+x = layers.Dropout(0.1)(x)
 x = layers.Dense(16*16, activation="relu")(x)
-x = layers.Dropout(0.15)(x)
+x = layers.Dropout(0.1)(x)
 x = layers.Dense(16*32, activation="relu")(x)
-x = layers.Dropout(0.15)(x)
+x = layers.Dropout(0.1)(x)
 x = layers.Dense(16*16, activation="relu")(x)
-x = layers.Dropout(0.15)(x)
+x = layers.Dropout(0.1)(x)
 x = layers.Dense(16*8, activation="relu")(x)
-x = layers.Dropout(0.15)(x)
+x = layers.Dropout(0.1)(x)
 outputs = layers.Dense(16, activation="softmax")(x)
 
 model = keras.Model(inputs=inputs, outputs=outputs)
 
 model.compile("adam", "sparse_categorical_crossentropy", metrics=["accuracy"])
 history = model.fit(
-    x_train, y_train, batch_size=64, epochs=20, validation_data=(x_val, y_val)
+    x_train, y_train, batch_size=64, epochs=40, validation_data=(x_val, y_val)
 )
-
-
-#print(classification_report(y_val, history, zero_division=1))
-
-#plot_history(history)
-
 
 

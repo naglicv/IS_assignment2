@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import RandomizedSearchCV, train_test_split, cross_val_score, GridSearchCV 
+from sklearn.model_selection import RandomizedSearchCV, train_test_split, cross_val_score
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
@@ -10,21 +10,20 @@ from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 import seaborn as sns
 import matplotlib.pyplot as plt
-from imblearn.over_sampling import SMOTE
 import time
 from sklearn.utils import compute_class_weight
 from scipy.stats import randint
-from sklearn.dummy import DummyClassifier
-   
-#df = pd.read_csv("./datasets/cleaned.csv")
-#df = df[:15000].copy()
-df = pd.read_csv("./datasets/1000.csv")
+from sklearn.metrics import classification_report
 
-#print(df[['clean_head','headline', 'clean_desc','short_description']][:10])
+# Naložimo počiščene podatke
+df = pd.read_csv("./datasets/cleaned.csv")
+df = df[:15000].copy()
+#df = pd.read_csv("./datasets/1000.csv")
+
 # Split the data into features (X) and target variable (y)
 X = df.drop('category', axis=1)
 y = pd.Categorical(df['category'])
@@ -32,11 +31,10 @@ y = pd.Categorical(df['category'])
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-
+# Vectorize X sets
 vectorizer = TfidfVectorizer()
 X_train_vec = vectorizer.fit_transform(X_train['clean_text'].values.astype('U'))
 X_test_vec = vectorizer.transform(X_test['clean_text'].values.astype('U'))
-
 
 # Decision Tree
 model_DT = DecisionTreeClassifier(random_state=42)
@@ -99,7 +97,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_bagging, zero_division=1))
 
 # Random Forest
-model_rf = RandomForestClassifier(max_depth=150, random_state=8678686)
+model_rf = RandomForestClassifier(n_estimators=300, max_features='sqrt', random_state=8678686)
 # Start the timer
 start_time = time.time()
 model_rf.fit(X_train_vec, y_train)
@@ -114,7 +112,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_rf, zero_division=1))
 
 # Logistic Regression
-model_lr = LogisticRegression(class_weight='balanced', max_iter=1000, random_state=42)
+model_lr = LogisticRegression(class_weight='balanced', C=10, penalty='l2', max_iter=1000, solver='liblinear', random_state=42)
 # Start the timer
 start_time = time.time()
 model_lr.fit(X_train_vec, y_train)
@@ -129,7 +127,7 @@ print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_lr, zero_division=1))
 
 # Boosting
-model_boosting = AdaBoostClassifier(estimator=DecisionTreeClassifier(), random_state=8678686)
+model_boosting = AdaBoostClassifier(learning_rate=200, n_estimators=40, estimator=DecisionTreeClassifier(), random_state=42)
 # Start the timer
 start_time = time.time()
 model_boosting.fit(X_train_vec, y_train)
@@ -173,24 +171,6 @@ elapsed_time = end_time - start_time
 print(f"\tTime taken: {elapsed_time} seconds")
 print(classification_report(y_test, pred_voting_soft, zero_division=1))
 
-
-# Weighted Voting 
-# Start the timer
-'''start_time = time.time()
-pred_rf_prob = model_rf.predict_proba(X_test_vec)
-pred_lr_prob = model_lr.predict_proba(X_test_vec)
-pred_nb_prob = model_NB.predict_proba(X_test_vec)
-
-weighted_rf_prob = result_rf * pred_rf_prob
-weighted_lr_prob = result_lr * pred_lr_prob
-weighted_nb_prob = result_bagging * pred_nb_prob
-
-pred_prob = weighted_rf_prob + weighted_lr_prob + weighted_nb_prob
-predicted_labels = np.argmax(pred_prob, axis=1)
-#print(classification_report(y_test, pred_prob, zero_division=1))'''
-
-
-
 # int2class conversion dict
 class_conv = {
     0: 'BLACK VOICES',
@@ -210,21 +190,11 @@ class_conv = {
     14: 'WELLNESS'
 }
 
-# Evaluate
-'''predicted_labels = [class_conv[i] for i in predicted_labels]
-result_wvoting = accuracy_score(y_test, predicted_labels)
-print("Weighted Voting Accuracy:", result_wvoting)
-# Stop the timer
-end_time = time.time()
-# Calculate the elapsed time
-elapsed_time = end_time - start_time
-print(f"\tTime taken: {elapsed_time} seconds")'''
-
 # Label encoding
 label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(y)
 
-# Splitting the dataset into the Training set and Test set
+# Splitting the dataset into the Training set and Test set for XGBoost
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=8678686)
 
 X_train_vec = vectorizer.fit_transform(X_train['clean_text'].values.astype('U'))
@@ -255,7 +225,6 @@ models = {
     "Logistic Regression": {"model": model_lr, "prediction": pred_lr, "performance": result_lr, "is_ensemble": False},
     "Hard Voting": {"model": model_voting_hard, "prediction": pred_voting_hard, "performance": result_voting_hard, "is_ensemble": True},
     "Soft Voting": {"model": model_voting_soft, "prediction": pred_voting_soft, "performance": result_voting_soft, "is_ensemble": True},
-    #"Weighted Voting": {"model": None, "prediction": predicted_labels, "performance": result_wvoting, "is_ensemble": True},
     "Bagging": {"model": model_bagging, "prediction": pred_bagging, "performance": result_bagging, "is_ensemble": True},
     "Random Forest": {"model": model_rf, "prediction": pred_rf, "performance": result_rf, "is_ensemble": True},
     "Boosting": {"model": model_boosting, "prediction": pred_boosting, "performance": result_boosting, "is_ensemble": True},
@@ -284,9 +253,11 @@ print(classification_report(y_test, best_predictions, zero_division=1))
 
 # Calculate cross-validation scores for the best model
 # Note: For weighted voting, cross-validation is not directly applicable as it involves combining predictions
-'''if best_model is not None:
-    scores = cross_val_score(best_model, X_train_vec, y_train, cv=5)
-    print(" -> Cross-Validation Scores:", scores)'''
+if best_model is not None:
+    scores = cross_val_score(best_model, X_train_vec, y_train, cv=10)
+    print(" -> Cross-Validation Scores:", scores)
+
+print(classification_report(y_test, best_model))
        
 # Visualization
 result_df = pd.DataFrame([(name, model['performance'], model['is_ensemble']) for name, model in models.items()], columns=['Algorithm', 'Performance', 'Ensemble Model'])
@@ -300,3 +271,14 @@ plt.ylabel('Algorithm')
 plt.title('Performance Comparison')
 plt.legend(title='Ensemble Model', loc='lower right')
 plt.show()
+
+x_train = 0
+x_test = 0
+
+
+model_DT = DecisionTreeClassifier()
+model_DT.fit(x_train, y_train)
+pred_DT = model_DT.predict(x_test)
+result_ca_DT = accuracy_score(y_test, pred_DT)
+print("Decision Tree Accuracy:", result_ca_DT)
+print(classification_report(y_test, pred_DT))
